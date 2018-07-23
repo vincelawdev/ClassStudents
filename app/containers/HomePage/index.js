@@ -13,7 +13,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
+import { makeSelectActiveFormId } from 'containers/App/selectors';
 import { openForm } from './actions';
 import reducer from './reducer';
 import Button from '../../components/Button/';
@@ -38,11 +40,9 @@ HomePage.propTypes = {
   onClickNewStudent: PropTypes.func,
 };
 
-const mapStateToProps = state => {
-  return {
-    activeFormId: state.getIn(['home', 'activeFormId']),
-  };
-};
+const mapStateToProps = createStructuredSelector({
+  activeFormId: makeSelectActiveFormId(),
+});
 
 const mapDispatchToProps = dispatch => {
   return {
