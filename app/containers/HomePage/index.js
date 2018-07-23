@@ -10,14 +10,22 @@
  */
 
 import React from 'react';
+import Button from '../../components/Button/';
 
 /* eslint-disable react/prefer-stateless-function */
-export default class HomePage extends React.PureComponent {
+class HomePage extends React.Component {
+  newClassOnClick = () => {
+    console.log('clicked!');
+  };
+
   render() {
     return (
-      <h1>
-        Testing
-      </h1>
+      <div>
+        <h1>Classes</h1>
+        <Button title={'New Class'} onClickCallback={this.newClassOnClick} />
+      </div>
     );
   }
 }
+
+export default HomePage;
