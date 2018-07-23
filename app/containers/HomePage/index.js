@@ -18,7 +18,9 @@ import injectReducer from 'utils/injectReducer';
 import { makeSelectActiveFormId } from 'containers/App/selectors';
 import { openForm } from './actions';
 import reducer from './reducer';
+import Form from '../../components/Form/';
 import Button from '../../components/Button/';
+import './HomePage.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.Component {
@@ -26,8 +28,9 @@ class HomePage extends React.Component {
     const { activeFormId, onClickNewClass, onClickNewStudent } = this.props;
 
     return (
-      <div>
-        <h1>Classes</h1>
+      <div className='HomePage'>
+        <h1 className='H1'>Classes</h1>
+        <Form>Testing form</Form>
         <Button title='New Class' onClickCallback={onClickNewClass} /> <Button title='New Student' onClickCallback={onClickNewStudent} />
       </div>
     );
