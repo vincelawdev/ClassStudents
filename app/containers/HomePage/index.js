@@ -30,7 +30,16 @@ class HomePage extends React.Component {
     return (
       <div className='HomePage'>
         <h1 className='H1'>Classes</h1>
-        <Form>Testing form</Form>
+        {activeFormId === 'newClass' &&
+          <Form>
+            <h2 className='H2'>New Class</h2>
+          </Form>
+        }
+        {activeFormId === 'newStudent' &&
+        <Form>
+          <h2 className='H2'>New Student</h2>
+        </Form>
+        }
         <Button title='New Class' onClickCallback={onClickNewClass} /> <Button title='New Student' onClickCallback={onClickNewStudent} />
       </div>
     );
