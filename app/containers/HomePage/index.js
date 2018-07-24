@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import formatAussieDate from 'utils/formatDate';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses } from 'containers/App/selectors';
 import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass } from './actions';
@@ -72,7 +73,7 @@ class HomePage extends React.PureComponent {
               return (<tr key={index}>
                 <td>{classSingle.classId}</td>
                 <td>{classSingle.className}</td>
-                <td>{classSingle.classStart}</td>
+                <td>{formatAussieDate(classSingle.classStart)}</td>
                 <td>{classSingle.classStudents.length}</td>
                 <td><TableAction label='View' type='view' onClickCallback={()=> console.log('view clicked')} /> / <TableAction label='Delete' type='delete' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
               </tr>);
