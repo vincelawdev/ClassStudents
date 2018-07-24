@@ -11,7 +11,7 @@
  */
 import { fromJS } from 'immutable';
 
-import { OPEN_FORM } from './constants';
+import { OPEN_FORM, CLOSE_FORM } from './constants';
 
 // The initial state of the App
 export const initialState = fromJS({
@@ -22,6 +22,8 @@ function homeReducer(state = initialState, action) {
   switch (action.type) {
     case OPEN_FORM:
       return state.set('activeFormId', action.id);
+    case CLOSE_FORM:
+      return state.set('activeFormId', '');
     default:
       return state;
   }

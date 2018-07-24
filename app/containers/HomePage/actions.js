@@ -15,12 +15,20 @@
  *    }
  */
 
-import { OPEN_FORM } from './constants';
+import { OPEN_FORM, CLOSE_FORM } from './constants';
 
 // open form by form id
 export function openForm(id) {
   return {
     type: OPEN_FORM,
+    id,
+  };
+}
+
+// close form by passing empty string '' in form id
+export function closeForm(id) {
+  return {
+    type: CLOSE_FORM,
     id,
   };
 }

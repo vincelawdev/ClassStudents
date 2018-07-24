@@ -10,3 +10,4 @@
  */
 
 export const OPEN_FORM = 'boilerplate/Home/OPEN_FORM';
+export const CLOSE_FORM = 'boilerplate/Home/CLOSE_FORM';

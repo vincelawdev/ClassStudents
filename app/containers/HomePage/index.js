@@ -16,7 +16,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectActiveFormId } from 'containers/App/selectors';
-import { openForm } from './actions';
+import { openForm, closeForm } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
 import Button from '../../components/Button/';
@@ -25,7 +25,7 @@ import './HomePage.css';
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.Component {
   render() {
-    const { activeFormId, onClickNewClass, onClickNewStudent } = this.props;
+    const { activeFormId, onClickNewClass, onClickNewStudent, onClickCancel } = this.props;
 
     return (
       <div className='HomePage'>
@@ -33,12 +33,14 @@ class HomePage extends React.Component {
         {activeFormId === 'newClass' &&
           <Form>
             <h2 className='H2'>New Class</h2>
+            <Button title='Cancel' onClickCallback={onClickCancel} />
           </Form>
         }
         {activeFormId === 'newStudent' &&
-        <Form>
-          <h2 className='H2'>New Student</h2>
-        </Form>
+          <Form>
+            <h2 className='H2'>New Student</h2>
+            <Button title='Cancel' onClickCallback={onClickCancel} />
+          </Form>
         }
         <Button title='New Class' onClickCallback={onClickNewClass} /> <Button title='New Student' onClickCallback={onClickNewStudent} />
       </div>
@@ -50,6 +52,7 @@ HomePage.propTypes = {
   activeFormId: PropTypes.string,
   onClickNewClass: PropTypes.func,
   onClickNewStudent: PropTypes.func,
+  onClickCancel: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -60,6 +63,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onClickNewClass: () => { dispatch(openForm('newClass')) },
     onClickNewStudent: () => { dispatch(openForm('newStudent')) },
+    onClickCancel: () => { dispatch(closeForm()) },
   };
 };
 
