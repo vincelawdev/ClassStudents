@@ -40,7 +40,9 @@ export const initialState = fromJS({
 function addClass(state) {
   const newClasses = state.get('classes').toJS();
   const newClass = state.get('newClassFields').toJS();
-  const classIndex = newClasses.findIndex(classSingle => classSingle.classId === newClass.classId);
+  const classIndex = newClasses.findIndex(
+    classSingle => classSingle.classId === newClass.classId,
+  );
 
   // class id is unique
   if(classIndex === -1) {
@@ -54,7 +56,9 @@ function addClass(state) {
 
 function deleteClass(state, action) {
   const newClasses = state.get('classes').toJS();
-  const classIndex = newClasses.findIndex(classSingle => classSingle.classId === action.classId);
+  const classIndex = newClasses.findIndex(
+    classSingle => classSingle.classId === action.classId,
+  );
   newClasses.splice(classIndex, 1);
 
   return state.set('classes', fromJS(newClasses));
