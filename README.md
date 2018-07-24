@@ -4,7 +4,7 @@
 
 This ClassStudents project was created with [React Boilerplate](https://github.com/react-boilerplate/react-boilerplate).
 
-You may view it at [http://www.vincelaw.com.au/classstudents](http://www.vincelaw.com.au/classstudents).
+You may view it at [http://classstudents.vincelaw.com.au/](http://classstudents.vincelaw.com.au/).
 
 ## Quick start
 
