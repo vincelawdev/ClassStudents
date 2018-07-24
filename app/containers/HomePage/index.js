@@ -21,6 +21,7 @@ import reducer from './reducer';
 import Form from '../../components/Form/';
 import Input from '../../components/Input/';
 import Button from '../../components/Button/';
+import TableAction from '../../components/TableAction';
 import './HomePage.css';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -71,7 +72,7 @@ class HomePage extends React.PureComponent {
                 <td>{classSingle.className}</td>
                 <td>{classSingle.classStart}</td>
                 <td>{classSingle.classNumber}</td>
-                <td></td>
+                <td><TableAction label='View' type='view' onClickCallback={()=> console.log('view clicked')} /> / <TableAction label='Delete' type='delete' onClickCallback={()=> console.log('delete clicked')} /></td>
               </tr>);
             })}
           </tbody>

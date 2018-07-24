@@ -1,0 +1,10 @@
+.TableAction {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    border: none;
+    outline: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
