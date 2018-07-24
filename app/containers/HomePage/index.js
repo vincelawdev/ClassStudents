@@ -33,6 +33,19 @@ class HomePage extends React.Component {
         {activeFormId === 'newClass' &&
           <Form>
             <h2 className='H2'>New Class</h2>
+
+            <label className='Label' htmlFor='classId'>Class ID:</label>
+            <input id='classId' className='Input' type='text' />
+
+            <label className='Label' htmlFor='className'>Class Name:</label>
+            <input id='className' className='Input' type='text' />
+
+            <label className='Label' htmlFor='classNumber'>Maximum number of students:</label>
+            <input id='classNumber' className='Input' type='number' />
+
+            <label className='Label' htmlFor='classStart'>Starting Date:</label>
+            <input id='classStart' className='Input' type='date' />
+
             <Button title='Cancel' onClickCallback={onClickCancel} />
           </Form>
         }
