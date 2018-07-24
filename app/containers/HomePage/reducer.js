@@ -79,7 +79,7 @@ function addStudentClass(state) {
     studentId => studentId === newStudentClass.studentId,
   );
 
-  // student id is unique and maximum number of students is not reached
+  // student id is unique and maximum number of students has not been reached
   if(studentIndex === -1 && (studentClassStudents.length < studentClass.classNumber)) {
     newClasses[studentClassIndex].classStudents.push(newStudentClass.studentId);
 
@@ -92,7 +92,10 @@ function addStudentClass(state) {
 function homeReducer(state = initialState, action) {
   switch (action.type) {
     case OPEN_FORM:
-      return state.set('activeFormId', action.id);
+      return state.merge({
+        activeFormId: action.formId,
+        activeClassId: action.classId,
+      });
     case CLOSE_FORM:
       return state.merge({
         activeFormId: '',

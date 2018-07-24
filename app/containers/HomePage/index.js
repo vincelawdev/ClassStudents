@@ -91,7 +91,7 @@ class HomePage extends React.PureComponent {
   };
 
   render() {
-    const { activeFormId, newClassFields, classes, students, deleteClassById } = this.props;
+    const { activeFormId, newClassFields, classes, students, openClassForm, deleteClassById } = this.props;
 
     // students options for select component
     const studentsOptions = students.map(student => {
@@ -130,7 +130,7 @@ class HomePage extends React.PureComponent {
                 <td>{classSingle.className}</td>
                 <td>{formatAussieDate(classSingle.classStart)}</td>
                 <td>{classSingle.classStudents.length}</td>
-                <td><TableAction label='View' type='view' onClickCallback={()=> console.log('view clicked')} /> / <TableAction label='Delete' type='delete' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
+                <td><TableAction label='View' type='view' onClickCallback={() => openClassForm(classSingle.classId)} /> / <TableAction label='Delete' type='delete' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
               </tr>);
             })}
           </tbody>
@@ -173,6 +173,7 @@ HomePage.propTypes = {
   students: PropTypes.array,
   openNewClassForm: PropTypes.func,
   openNewStudentForm: PropTypes.func,
+  openClassForm: PropTypes.func,
   closeForm: PropTypes.func,
   addClassByObj: PropTypes.func,
   updateNewClassFields: PropTypes.func,
@@ -193,8 +194,9 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => {
   return {
-    openNewClassForm: () => dispatch(openForm('newClass')),
-    openNewStudentForm: () => dispatch(openForm('newStudent')),
+    openNewClassForm: () => dispatch(openForm('newClass', '')),
+    openNewStudentForm: () => dispatch(openForm('newStudent', '')),
+    openClassForm: classId => dispatch(openForm('viewClass', classId)),
     closeForm: () => dispatch(closeForm()),
     addClassByObj: () => dispatch(addClass()),
     updateNewClassFields: (property, value) => dispatch(updateNewClassFields(property, value)),

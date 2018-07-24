@@ -19,11 +19,12 @@ import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS,
   RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS,
   RESET_NEW_STUDENT_CLASS_FIELDS, ADD_STUDENT_CLASS } from './constants';
 
-// open form by form id
-export function openForm(id) {
+// open form by form id and set active form id and class id
+export function openForm(formId, classId) {
   return {
     type: OPEN_FORM,
-    id,
+    formId,
+    classId,
   };
 }
 
