@@ -86,8 +86,8 @@ class HomePage extends React.PureComponent {
             </tr>
           </thead>
           <tbody>
-            {classes.map((classSingle, index) => {
-              return (<tr key={index}>
+            {classes.map((classSingle) => {
+              return (<tr key={classSingle.classId}>
                 <td>{classSingle.classId}</td>
                 <td>{classSingle.className}</td>
                 <td>{formatAussieDate(classSingle.classStart)}</td>

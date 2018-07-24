@@ -22,10 +22,17 @@ const newClassFieldsInitial = {
   classStudents: [],
 };
 
+// initial object of newStudentClassFields
+const newStudentClassFieldsInitial = {
+  studentId: '',
+  classId: '',
+};
+
 // The initial state of the App
 export const initialState = fromJS({
   activeFormId: '',
   newClassFields: newClassFieldsInitial,
+  newStudentClassFields: newStudentClassFieldsInitial,
   students: content.Students,
   classes: content.Classes,
 });

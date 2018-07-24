@@ -10,8 +10,8 @@ function Select(props) {
       <label className='SelectLabel' htmlFor={id}>{label}</label>
       <select id={id} className='Select' onChange={onChangeCallback}>
         <option value="">{firstOptionText}</option>
-        {options.map((option, index) => {
-          return (<option key={index} value={option.value}>{option.label}</option>);
+        {options.map((option) => {
+          return (<option key={option.value} value={option.value}>{option.label}</option>);
         })}
       </select>
     </div>
@@ -22,7 +22,7 @@ Select.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   firstOptionText: PropTypes.string,
-  //options: PropTypes.array.isRequired,
+  options: PropTypes.array.isRequired,
   onChangeCallback: PropTypes.func.isRequired,
 };
 
