@@ -26,6 +26,7 @@ export const initialState = fromJS({
   activeFormId: '',
   newClassFields: newClassFieldsInitial,
   students: content.Students,
+  classes: content.Classes,
 });
 
 function homeReducer(state = initialState, action) {

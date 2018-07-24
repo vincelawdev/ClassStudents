@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectActiveFormId, makeSelectNewClassFields } from 'containers/App/selectors';
+import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses } from 'containers/App/selectors';
 import { openForm, closeForm, updateNewClassFields, resetNewClassFields } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
@@ -24,7 +24,7 @@ import Button from '../../components/Button/';
 import './HomePage.css';
 
 /* eslint-disable react/prefer-stateless-function */
-class HomePage extends React.Component {
+class HomePage extends React.PureComponent {
   onClickNewClassCancel = () => {
     this.props.resetNewClassFields();
     this.props.closeForm();
@@ -48,11 +48,35 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const { activeFormId, newClassFields, openNewClassForm, openNewStudentForm } = this.props;
+    const { activeFormId, newClassFields, classes, openNewClassForm, openNewStudentForm } = this.props;
 
     return (
       <div className='HomePage'>
         <h1 className='H1'>Classes</h1>
+
+        <table className='Table'>
+          <thead>
+            <tr>
+              <th>Class ID</th>
+              <th>Class Name</th>
+              <th>Starting Date</th>
+              <th># of Students</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {classes.map((classSingle, index) => {
+              return (<tr key={index}>
+                <td>{classSingle.classId}</td>
+                <td>{classSingle.className}</td>
+                <td>{classSingle.classStart}</td>
+                <td>{classSingle.classNumber}</td>
+                <td></td>
+              </tr>);
+            })}
+          </tbody>
+        </table>
+
         {activeFormId === 'newClass' &&
           <Form>
             <h2 className='H2'>New Class</h2>
@@ -71,6 +95,7 @@ class HomePage extends React.Component {
             <Button title='Cancel' onClickCallback={this.onClickNewStudentCancel} />
           </Form>
         }
+
         <Button title='New Class' onClickCallback={openNewClassForm} /> <Button title='New Student' onClickCallback={openNewStudentForm} />
       </div>
     );
@@ -90,6 +115,7 @@ HomePage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   activeFormId: makeSelectActiveFormId(),
   newClassFields: makeSelectNewClassFields(),
+  classes: makeSelectClasses(),
 });
 
 const mapDispatchToProps = dispatch => {

@@ -10,3 +10,28 @@
     margin: 0 0 20px 0;
     padding: 0;
 }
+
+.Table {
+    margin: 0 0 60px 0;
+}
+
+.Table, .Table thead th, .Table tbody td {
+    border: 1px solid black;
+}
+
+.Table thead th, .Table tbody td {
+    padding: 10px;
+}
+
+.Table thead th {
+    background-color: green;
+    color: white;
+}
+
+.Table tbody tr:nth-child(odd) {
+    background-color: gainsboro;
+}
+
+.Table tbody tr:nth-child(even) {
+    background-color: white;
+}

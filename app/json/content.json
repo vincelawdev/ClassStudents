@@ -11,6 +11,52 @@
     {
       "id": "FM001",
       "name": "Freddie Mercury"
+    },
+    {
+      "id": "VL001",
+      "name": "Vince Law"
+    },
+    {
+      "id": "MJ001",
+      "name": "Mary Jane"
+    },
+    {
+      "id": "MJ002",
+      "name": "Michael Jackson"
+    },
+    {
+      "id": "JB001",
+      "name": "James Bond"
+    }
+  ],
+  "Classes": [
+    {
+      "classId": "CS001",
+      "className": "Web Development",
+      "classNumber": "5",
+      "classStart": "2018-08-01",
+      "classStudents": []
+    },
+    {
+      "classId": "CS002",
+      "className": "Web Design",
+      "classNumber": "10",
+      "classStart": "2018-09-01",
+      "classStudents": []
+    },
+    {
+      "classId": "CS003",
+      "className": "Business Administration",
+      "classNumber": "20",
+      "classStart": "2018-10-01",
+      "classStudents": []
+    },
+    {
+      "classId": "CS004",
+      "className": "Marketing",
+      "classNumber": "20",
+      "classStart": "2018-11-01",
+      "classStudents": []
     }
   ]
 }
