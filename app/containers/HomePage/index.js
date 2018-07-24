@@ -16,7 +16,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import formatAussieDate from 'utils/formatDate';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectNewStudentClassFields, makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
+import { makeSelectActiveFormId, makeSelectActiveClassId, makeSelectNewClassFields, makeSelectNewStudentClassFields, makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
 import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass, updateNewStudentClassFields, resetNewStudentClassFields, addStudentClass } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
@@ -90,8 +90,27 @@ class HomePage extends React.PureComponent {
     this.props.updateNewStudentClassFields(property, event.target.value);
   };
 
+  // view class - close
+  onClickViewClassClose = () => {
+    this.props.resetNewClassFields();
+    this.props.resetNewStudentClassFields();
+    this.props.closeForm();
+  };
+
+  // retrieve student name by student id
+  getStudentNameById = (studentId) => {
+    const selectedStudent = this.props.students.find(student => student.id === studentId,);
+
+    if(typeof selectedStudent !== 'undefined') {
+      return selectedStudent.name;
+    }
+    else {
+      return '';
+    }
+  };
+
   render() {
-    const { activeFormId, newClassFields, classes, students, openClassForm, deleteClassById } = this.props;
+    const { activeFormId, activeClassId, newClassFields, classes, students, openClassForm, deleteClassById } = this.props;
 
     // students options for select component
     const studentsOptions = students.map(student => {
@@ -108,6 +127,9 @@ class HomePage extends React.PureComponent {
         value: classSingle.classId,
       };
     });
+
+    // selected class based on the activeClassId
+    const selectedClass = classes.find(classSingle => classSingle.classId === activeClassId,);
 
     return (
       <div className='HomePage'>
@@ -158,6 +180,32 @@ class HomePage extends React.PureComponent {
             <Button title='Save' onClickCallback={this.onClickNewStudentSave} /> <Button title='Cancel' onClickCallback={this.onClickNewStudentCancel} />
           </Form>
         }
+        {activeFormId === 'viewClass' &&
+        <Form>
+          <h2 className='H2'>{typeof selectedClass !== 'undefined' && `${selectedClass.classId}: ${selectedClass.className}` }</h2>
+
+          <table className='Table'>
+            <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {selectedClass.classStudents.map((student) => {
+              return (<tr key={student}>
+                <td>{student}</td>
+                <td>{this.getStudentNameById(student)}</td>
+                <td><TableAction label='Delete' type='delete' onClickCallback={() => {console.log('delete student')}} /></td>
+              </tr>);
+            })}
+            </tbody>
+          </table>
+
+          <Button title='Close' onClickCallback={this.onClickViewClassClose} />
+        </Form>
+        }
 
         <Button title='Add New Class' onClickCallback={this.onClickNewClassOpen} /> <Button title='Add Student to Class' onClickCallback={this.onClickNewStudentOpen} />
       </div>
@@ -167,6 +215,7 @@ class HomePage extends React.PureComponent {
 
 HomePage.propTypes = {
   activeFormId: PropTypes.string,
+  activeClassId: PropTypes.string,
   newClassFields: PropTypes.object,
   NewStudentClassFields: PropTypes.object,
   classes: PropTypes.array,
@@ -186,6 +235,7 @@ HomePage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   activeFormId: makeSelectActiveFormId(),
+  activeClassId: makeSelectActiveClassId(),
   newClassFields: makeSelectNewClassFields(),
   NewStudentClassFields: makeSelectNewStudentClassFields(),
   classes: makeSelectClasses(),

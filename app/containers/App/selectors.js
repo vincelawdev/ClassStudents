@@ -10,6 +10,9 @@ const makeSelectLocation = () =>
 const makeSelectActiveFormId = () =>
   createSelector(selectHome, homeState => homeState.get('activeFormId'));
 
+const makeSelectActiveClassId = () =>
+  createSelector(selectHome, homeState => homeState.get('activeClassId'));
+
 const makeSelectNewClassFields = () =>
   createSelector(selectHome, homeState => homeState.get('newClassFields').toJS());
 
@@ -25,6 +28,7 @@ const makeSelectClasses = () =>
 export {
   makeSelectLocation,
   makeSelectActiveFormId,
+  makeSelectActiveClassId,
   makeSelectNewClassFields,
   makeSelectNewStudentClassFields,
   makeSelectStudents,
