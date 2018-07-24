@@ -19,5 +19,5 @@ export {
   makeSelectActiveFormId,
   makeSelectNewClassFields,
   makeSelectStudents,
-  makeSelectClasses
+  makeSelectClasses,
 };

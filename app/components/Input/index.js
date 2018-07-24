@@ -7,7 +7,7 @@ function Input(props) {
 
   return (
     <div>
-      <label className='Label' htmlFor={id}>{label}</label>
+      <label className='InputLabel' htmlFor={id}>{label}</label>
       <input id={id} className='Input' type={type} value={value} onChange={onChangeCallback} />
     </div>
   );

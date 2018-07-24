@@ -16,11 +16,12 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import formatAussieDate from 'utils/formatDate';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses } from 'containers/App/selectors';
+import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
 import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
 import Input from '../../components/Input/';
+import Select from '../../components/Select/';
 import Button from '../../components/Button/';
 import TableAction from '../../components/TableAction';
 import './HomePage.css';
@@ -52,7 +53,23 @@ class HomePage extends React.PureComponent {
   };
 
   render() {
-    const { activeFormId, newClassFields, classes, openNewClassForm, openNewStudentForm, deleteClassById } = this.props;
+    const { activeFormId, newClassFields, classes, students, openNewClassForm, openNewStudentForm, deleteClassById } = this.props;
+
+    // students options for select component
+    const studentsOptions = students.map(student => {
+      return {
+        label: `${student.id}: ${student.name}`,
+        value: student.id,
+      };
+    });
+
+    // classes options for select component
+    const classesOptions = classes.map(classSingle => {
+      return {
+        label: `${classSingle.classId}: ${classSingle.className}`,
+        value: classSingle.classId,
+      };
+    });
 
     return (
       <div className='HomePage'>
@@ -85,10 +102,10 @@ class HomePage extends React.PureComponent {
           <Form>
             <h2 className='H2'>Add New Class</h2>
 
-            <Input id='classId' label='Class ID:' type='text' value={newClassFields.classId} onChangeCallback={event => this.onChangeNewClassFields(event, 'classId')} />
-            <Input id='className' label='Class Name:' type='text' value={newClassFields.className} onChangeCallback={event => this.onChangeNewClassFields(event, 'className')} />
-            <Input id='classNumber' label='Maximum number of students:' type='number' value={newClassFields.classNumber} onChangeCallback={event => this.onChangeNewClassFields(event, 'classNumber')} />
-            <Input id='classStart' label='Starting Date:' type='date' value={newClassFields.classStart} onChangeCallback={event => this.onChangeNewClassFields(event, 'classStart')} />
+            <Input id='newClassId' label='Class ID:' type='text' value={newClassFields.classId} onChangeCallback={event => this.onChangeNewClassFields(event, 'classId')} />
+            <Input id='newClassName' label='Class Name:' type='text' value={newClassFields.className} onChangeCallback={event => this.onChangeNewClassFields(event, 'className')} />
+            <Input id='newClassNumber' label='Maximum number of students:' type='number' value={newClassFields.classNumber} onChangeCallback={event => this.onChangeNewClassFields(event, 'classNumber')} />
+            <Input id='newClassStart' label='Starting Date:' type='date' value={newClassFields.classStart} onChangeCallback={event => this.onChangeNewClassFields(event, 'classStart')} />
 
             <Button title='Save' onClickCallback={this.onClickNewClassSave} /> <Button title='Cancel' onClickCallback={this.onClickNewClassCancel} />
           </Form>
@@ -96,6 +113,10 @@ class HomePage extends React.PureComponent {
         {activeFormId === 'newStudent' &&
           <Form>
             <h2 className='H2'>Add Student to Class</h2>
+
+            <Select id='studentId' label='Student' firstOptionText='Select a Student' options={studentsOptions} onChangeCallback={event => (event) => {}} />
+            <Select id='classId' label='Class' firstOptionText='Select a Class' options={classesOptions} onChangeCallback={event => (event) => {}} />
+
             <Button title='Cancel' onClickCallback={this.onClickNewStudentCancel} />
           </Form>
         }
@@ -110,6 +131,7 @@ HomePage.propTypes = {
   activeFormId: PropTypes.string,
   newClassFields: PropTypes.object,
   classes: PropTypes.array,
+  students: PropTypes.array,
   openNewClassForm: PropTypes.func,
   openNewStudentForm: PropTypes.func,
   closeForm: PropTypes.func,
@@ -123,6 +145,7 @@ const mapStateToProps = createStructuredSelector({
   activeFormId: makeSelectActiveFormId(),
   newClassFields: makeSelectNewClassFields(),
   classes: makeSelectClasses(),
+  students: makeSelectStudents(),
 });
 
 const mapDispatchToProps = dispatch => {

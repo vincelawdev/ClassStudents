@@ -1,8 +1,8 @@
-.InputLabel {
+.SelectLabel {
     display: block;
 }
 
-.Input {
+.Select {
     margin: 0 0 30px 0;
     padding: 10px;
     display: block;
