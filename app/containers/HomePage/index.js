@@ -195,7 +195,7 @@ class HomePage extends React.PureComponent {
             </tr>
             </thead>
             <tbody>
-            {selectedClass.classStudents.map((student) => {
+            {typeof selectedClass !== 'undefined' && selectedClass.classStudents.map((student) => {
               return (<tr key={student}>
                 <td>{student}</td>
                 <td>{this.getStudentNameById(student)}</td>
