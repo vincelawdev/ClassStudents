@@ -58,11 +58,17 @@ class HomePage extends React.Component {
     this.props.closeForm();
   };
 
-  saveClass = () => {
-    console.log('classId:', this.state.newClassFields.classId);
-    console.log('className:', this.state.newClassFields.className);
-    console.log('classNumber:', this.state.newClassFields.classNumber);
-    console.log('classStart:', this.state.newClassFields.classStart);
+  saveNewClass = () => {
+    // simple validation check to ensure all fields are entered before saving
+    if(this.state.newClassFields.classId !== '' && this.state.newClassFields.className !== '' && this.state.newClassFields.classNumber !== '' && this.state.newClassFields.classStart !== '') {
+      console.log('saving new class');
+      console.log('classId:', this.state.newClassFields.classId);
+      console.log('className:', this.state.newClassFields.className);
+      console.log('classNumber:', this.state.newClassFields.classNumber);
+      console.log('classStart:', this.state.newClassFields.classStart);
+
+      this.props.closeForm();
+    }
   };
 
   render() {
@@ -80,7 +86,7 @@ class HomePage extends React.Component {
             <Input id='classNumber' label='Maximum number of students:' type='number' value={this.state.newClassFields.classNumber} onChangeCallback={event => this.onChangeNewClassFields(event, 'classNumber')} />
             <Input id='classStart' label='Starting Date:' type='date' value={this.state.newClassFields.classStart} onChangeCallback={event => this.onChangeNewClassFields(event, 'classStart')} />
 
-            <Button title='Save' onClickCallback={this.saveClass} /> <Button title='Cancel' onClickCallback={this.onClickNewClassCancel} />
+            <Button title='Save' onClickCallback={this.saveNewClass} /> <Button title='Cancel' onClickCallback={this.onClickNewClassCancel} />
           </Form>
         }
         {activeFormId === 'newStudent' &&
