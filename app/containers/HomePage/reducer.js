@@ -57,7 +57,7 @@ function homeReducer(state = initialState, action) {
     case UPDATE_NEW_CLASS_FIELDS:
       return state.setIn(['newClassFields', action.property], action.value);
     case RESET_NEW_CLASS_FIELDS:
-      return state.set('newClassFields', newClassFieldsInitial);
+      return state.set('newClassFields', fromJS(newClassFieldsInitial));
     case DELETE_CLASS:
       return deleteClass(state, action);
     default:
