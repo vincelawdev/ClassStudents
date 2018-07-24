@@ -26,6 +26,17 @@ import './HomePage.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
+  onClickNewClassSave = () => {
+    const { newClassFields } = this.props;
+
+    // simple validation check to ensure all fields have been entered before saving
+    if(newClassFields.classId !== '' && newClassFields.className !== '' && newClassFields.classNumber !== '' && newClassFields.classStart !== '') {
+      this.props.addClassByObj();
+      this.props.resetNewClassFields();
+      this.props.closeForm();
+    }
+  };
+
   onClickNewClassCancel = () => {
     this.props.resetNewClassFields();
     this.props.closeForm();
@@ -37,16 +48,6 @@ class HomePage extends React.PureComponent {
 
   onClickNewStudentCancel = () => {
     this.props.closeForm();
-  };
-
-  onClickSaveNewClass = () => {
-    const { newClassFields } = this.props;
-
-    // simple validation check to ensure all fields have been entered before saving
-    if(newClassFields.classId !== '' && newClassFields.className !== '' && newClassFields.classNumber !== '' && newClassFields.classStart !== '') {
-      this.props.addClassByObj();
-      this.props.closeForm();
-    }
   };
 
   render() {
@@ -88,7 +89,7 @@ class HomePage extends React.PureComponent {
             <Input id='classNumber' label='Maximum number of students:' type='number' value={newClassFields.classNumber} onChangeCallback={event => this.onChangeNewClassFields(event, 'classNumber')} />
             <Input id='classStart' label='Starting Date:' type='date' value={newClassFields.classStart} onChangeCallback={event => this.onChangeNewClassFields(event, 'classStart')} />
 
-            <Button title='Save' onClickCallback={this.onClickSaveNewClass} /> <Button title='Cancel' onClickCallback={this.onClickNewClassCancel} />
+            <Button title='Save' onClickCallback={this.onClickNewClassSave} /> <Button title='Cancel' onClickCallback={this.onClickNewClassCancel} />
           </Form>
         }
         {activeFormId === 'newStudent' &&

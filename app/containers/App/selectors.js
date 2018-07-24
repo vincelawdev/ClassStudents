@@ -8,7 +8,7 @@ const makeSelectLocation = () => createSelector(selectRoute, routeState => route
 
 const makeSelectActiveFormId = () => createSelector(selectHome, homeState => homeState.get('activeFormId'));
 
-const makeSelectNewClassFields = () => createSelector(selectHome, homeState => homeState.get('newClassFields'));
+const makeSelectNewClassFields = () => createSelector(selectHome, homeState => homeState.get('newClassFields').toJS());
 
 const makeSelectStudents = () => createSelector(selectHome, homeState => homeState.get('students').toJS());
 
