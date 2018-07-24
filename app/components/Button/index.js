@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import './Button.css';
 
 function Button(props) {
+  const { title, onClickCallback } = props;
+
   return (
-    <button className='Button' onClick={props.onClickCallback}>{props.title}</button>
+    <button className='Button' onClick={onClickCallback}>{title}</button>
   );
 }
 

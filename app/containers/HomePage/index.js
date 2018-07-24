@@ -19,11 +19,35 @@ import { makeSelectActiveFormId } from 'containers/App/selectors';
 import { openForm, closeForm } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
+import Input from '../../components/Input/';
 import Button from '../../components/Button/';
 import './HomePage.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.Component {
+  state = {
+    newClassFields: {
+      classId: '',
+      className: '',
+      classNumber: '',
+      classStart: '',
+    },
+  };
+
+  onChangeNewClassFields = (event, property) => {
+    const newClassFields = { ...this.state.newClassFields };
+    newClassFields[property] = event.target.value;
+
+    this.setState({ newClassFields });
+  };
+
+  testSaveClass = () => {
+    console.log('classId:', this.state.newClassFields.classId);
+    console.log('className:', this.state.newClassFields.className);
+    console.log('classNumber:', this.state.newClassFields.classNumber);
+    console.log('classStart:', this.state.newClassFields.classStart);
+  };
+
   render() {
     const { activeFormId, onClickNewClass, onClickNewStudent, onClickCancel } = this.props;
 
@@ -34,19 +58,12 @@ class HomePage extends React.Component {
           <Form>
             <h2 className='H2'>New Class</h2>
 
-            <label className='Label' htmlFor='classId'>Class ID:</label>
-            <input id='classId' className='Input' type='text' />
+            <Input id='classId' label='Class ID:' type='text' value={this.state.newClassFields.classId} onChangeCallback={event => this.onChangeNewClassFields(event, 'classId')} />
+            <Input id='className' label='Class Name:' type='text' value={this.state.newClassFields.className} onChangeCallback={event => this.onChangeNewClassFields(event, 'className')} />
+            <Input id='classNumber' label='Maximum number of students:' type='number' value={this.state.newClassFields.classNumber} onChangeCallback={event => this.onChangeNewClassFields(event, 'classNumber')} />
+            <Input id='classStart' label='Starting Date:' type='date' value={this.state.newClassFields.classStart} onChangeCallback={event => this.onChangeNewClassFields(event, 'classStart')} />
 
-            <label className='Label' htmlFor='className'>Class Name:</label>
-            <input id='className' className='Input' type='text' />
-
-            <label className='Label' htmlFor='classNumber'>Maximum number of students:</label>
-            <input id='classNumber' className='Input' type='number' />
-
-            <label className='Label' htmlFor='classStart'>Starting Date:</label>
-            <input id='classStart' className='Input' type='date' />
-
-            <Button title='Cancel' onClickCallback={onClickCancel} />
+            <Button title='Save' onClickCallback={this.testSaveClass} /> <Button title='Cancel' onClickCallback={onClickCancel} />
           </Form>
         }
         {activeFormId === 'newStudent' &&
