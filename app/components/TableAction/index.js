@@ -6,7 +6,14 @@ function TableAction(props) {
   const { label, type, onClickCallback } = props;
 
   const onClick = () => {
-    onClickCallback();
+    if(type === 'view') {
+      onClickCallback();
+    }
+    else if(type === 'delete') {
+      if(window.confirm('Are you sure you wish to delete this class?')) {
+        onClickCallback();
+      }
+    }
   };
 
   return (
@@ -16,7 +23,7 @@ function TableAction(props) {
 
 TableAction.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['view', 'delete']).isRequired,
   onClickCallback: PropTypes.func.isRequired,
 };
 
