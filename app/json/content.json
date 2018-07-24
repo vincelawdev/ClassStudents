@@ -1,0 +1,16 @@
+{
+  "Students": [
+    {
+      "id": "JP001",
+      "name": "Jimmy Page"
+    },
+    {
+      "id": "DG001",
+      "name": "David Gilmour"
+    },
+    {
+      "id": "FM001",
+      "name": "Freddie Mercury"
+    }
+  ]
+}

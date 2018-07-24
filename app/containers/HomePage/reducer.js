@@ -10,8 +10,8 @@
  *   return state.set('yourStateVariable', true);
  */
 import { fromJS } from 'immutable';
-
 import { OPEN_FORM, CLOSE_FORM, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS } from './constants';
+import content from '../../json/content.json';
 
 // initial object of newClassFields
 const newClassFieldsInitial = {
@@ -25,6 +25,7 @@ const newClassFieldsInitial = {
 export const initialState = fromJS({
   activeFormId: '',
   newClassFields: newClassFieldsInitial,
+  students: content.Students,
 });
 
 function homeReducer(state = initialState, action) {
