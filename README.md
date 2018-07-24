@@ -2,8 +2,9 @@
 
 <br />
 
-Created with React Boilerplate.[React Boilerplate](https://github.com/react-boilerplate/react-boilerplate)
+This ClassStudents project was created with [React Boilerplate](https://github.com/react-boilerplate/react-boilerplate).
 
+You may view it at [http://www.vincelaw.com.au/classstudents](http://www.vincelaw.com.au/classstudents).
 
 ## Quick start
 

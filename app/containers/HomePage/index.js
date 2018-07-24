@@ -82,7 +82,7 @@ class HomePage extends React.PureComponent {
 
         {activeFormId === 'newClass' &&
           <Form>
-            <h2 className='H2'>New Class</h2>
+            <h2 className='H2'>Add New Class</h2>
 
             <Input id='classId' label='Class ID:' type='text' value={newClassFields.classId} onChangeCallback={event => this.onChangeNewClassFields(event, 'classId')} />
             <Input id='className' label='Class Name:' type='text' value={newClassFields.className} onChangeCallback={event => this.onChangeNewClassFields(event, 'className')} />
@@ -94,12 +94,12 @@ class HomePage extends React.PureComponent {
         }
         {activeFormId === 'newStudent' &&
           <Form>
-            <h2 className='H2'>New Student</h2>
+            <h2 className='H2'>Add Student to Class</h2>
             <Button title='Cancel' onClickCallback={this.onClickNewStudentCancel} />
           </Form>
         }
 
-        <Button title='New Class' onClickCallback={openNewClassForm} /> <Button title='New Student' onClickCallback={openNewStudentForm} />
+        <Button title='Add New Class' onClickCallback={openNewClassForm} /> <Button title='Add Student to Class' onClickCallback={openNewStudentForm} />
       </div>
     );
   }
