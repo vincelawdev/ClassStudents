@@ -10,7 +10,7 @@
  *   return state.set('yourStateVariable', true);
  */
 import { fromJS } from 'immutable';
-import { OPEN_FORM, CLOSE_FORM, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS } from './constants';
+import { OPEN_FORM, CLOSE_FORM, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS, DELETE_CLASS } from './constants';
 import content from '../../json/content.json';
 
 // initial object of newClassFields
@@ -29,6 +29,14 @@ export const initialState = fromJS({
   classes: content.Classes,
 });
 
+function deleteClass(state, action) {
+  const newClasses = state.get('classes').toJS();
+  const classIndex = newClasses.findIndex(classSingle => classSingle.classId === action.classId);
+  newClasses.splice(classIndex, 1);
+
+  return state.set('classes', fromJS(newClasses));
+}
+
 function homeReducer(state = initialState, action) {
   switch (action.type) {
     case OPEN_FORM:
@@ -39,6 +47,8 @@ function homeReducer(state = initialState, action) {
       return state.setIn(['newClassFields', action.property], action.value);
     case RESET_NEW_CLASS_FIELDS:
       return state.set('newClassFields', newClassFieldsInitial);
+    case DELETE_CLASS:
+      return deleteClass(state, action);
     default:
       return state;
   }

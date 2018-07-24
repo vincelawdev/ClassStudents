@@ -16,7 +16,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses } from 'containers/App/selectors';
-import { openForm, closeForm, updateNewClassFields, resetNewClassFields } from './actions';
+import { openForm, closeForm, updateNewClassFields, resetNewClassFields, deleteClass } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
 import Input from '../../components/Input/';
@@ -39,7 +39,7 @@ class HomePage extends React.PureComponent {
     this.props.closeForm();
   };
 
-  saveNewClass = () => {
+  onClickSaveNewClass = () => {
     const { newClassFields } = this.props;
 
     // simple validation check to ensure all fields have been entered before saving
@@ -49,7 +49,7 @@ class HomePage extends React.PureComponent {
   };
 
   render() {
-    const { activeFormId, newClassFields, classes, openNewClassForm, openNewStudentForm } = this.props;
+    const { activeFormId, newClassFields, classes, openNewClassForm, openNewStudentForm, deleteClassById } = this.props;
 
     return (
       <div className='HomePage'>
@@ -72,7 +72,7 @@ class HomePage extends React.PureComponent {
                 <td>{classSingle.className}</td>
                 <td>{classSingle.classStart}</td>
                 <td>{classSingle.classNumber}</td>
-                <td><TableAction label='View' type='view' onClickCallback={()=> console.log('view clicked')} /> / <TableAction label='Delete' type='delete' onClickCallback={()=> console.log('delete clicked')} /></td>
+                <td><TableAction label='View' type='view' onClickCallback={()=> console.log('view clicked')} /> / <TableAction label='Delete' type='delete' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
               </tr>);
             })}
           </tbody>
@@ -87,7 +87,7 @@ class HomePage extends React.PureComponent {
             <Input id='classNumber' label='Maximum number of students:' type='number' value={newClassFields.classNumber} onChangeCallback={event => this.onChangeNewClassFields(event, 'classNumber')} />
             <Input id='classStart' label='Starting Date:' type='date' value={newClassFields.classStart} onChangeCallback={event => this.onChangeNewClassFields(event, 'classStart')} />
 
-            <Button title='Save' onClickCallback={this.saveNewClass} /> <Button title='Cancel' onClickCallback={this.onClickNewClassCancel} />
+            <Button title='Save' onClickCallback={this.onClickSaveNewClass} /> <Button title='Cancel' onClickCallback={this.onClickNewClassCancel} />
           </Form>
         }
         {activeFormId === 'newStudent' &&
@@ -106,9 +106,11 @@ class HomePage extends React.PureComponent {
 HomePage.propTypes = {
   activeFormId: PropTypes.string,
   newClassFields: PropTypes.object,
+  classes: PropTypes.array,
   openNewClassForm: PropTypes.func,
   openNewStudentForm: PropTypes.func,
   closeForm: PropTypes.func,
+  deleteClassById: PropTypes.func,
   updateNewClassFields: PropTypes.func,
   resetNewClassFields: PropTypes.func,
 };
@@ -126,6 +128,7 @@ const mapDispatchToProps = dispatch => {
     closeForm: () => dispatch(closeForm()),
     updateNewClassFields: (property, value) => dispatch(updateNewClassFields(property, value)),
     resetNewClassFields: () => dispatch(resetNewClassFields()),
+    deleteClassById: classId => dispatch(deleteClass(classId)),
   };
 };
 
