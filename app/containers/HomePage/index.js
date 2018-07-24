@@ -137,28 +137,30 @@ class HomePage extends React.PureComponent {
       <div className='HomePage'>
         <h1 className='H1'>Classes</h1>
 
-        <table className='Table'>
-          <thead>
-            <tr>
-              <th>Class ID</th>
-              <th>Class Name</th>
-              <th>Starting Date</th>
-              <th># of Students</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {classes.map((classSingle) => {
-              return (<tr key={classSingle.classId}>
-                <td>{classSingle.classId}</td>
-                <td>{classSingle.className}</td>
-                <td>{formatAussieDate(classSingle.classStart)}</td>
-                <td>{classSingle.classStudents.length}</td>
-                <td><TableAction label='View' type='view' onClickCallback={() => openClassForm(classSingle.classId)} /> / <TableAction label='Delete' type='delete' item='class' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
-              </tr>);
-            })}
-          </tbody>
-        </table>
+        <div className='TableResponsive'>
+          <table className='Table'>
+            <thead>
+              <tr>
+                <th>Class ID</th>
+                <th>Class Name</th>
+                <th>Starting Date</th>
+                <th># of Students</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {classes.map((classSingle) => {
+                return (<tr key={classSingle.classId}>
+                  <td>{classSingle.classId}</td>
+                  <td>{classSingle.className}</td>
+                  <td>{formatAussieDate(classSingle.classStart)}</td>
+                  <td>{classSingle.classStudents.length}</td>
+                  <td><TableAction label='View' type='view' onClickCallback={() => openClassForm(classSingle.classId)} /> / <TableAction label='Delete' type='delete' item='class' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
+                </tr>);
+              })}
+            </tbody>
+          </table>
+        </div>
 
         {activeFormId === 'newClass' &&
           <Form>
@@ -186,24 +188,26 @@ class HomePage extends React.PureComponent {
         <Form>
           <h2 className='H2'>{typeof selectedClass !== 'undefined' && `${selectedClass.classId}: ${selectedClass.className}` }</h2>
 
-          <table className='Table'>
-            <thead>
-            <tr>
-              <th>Student ID</th>
-              <th>Student Name</th>
-              <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {typeof selectedClass !== 'undefined' && selectedClass.classStudents.map((student) => {
-              return (<tr key={student}>
-                <td>{student}</td>
-                <td>{this.getStudentNameById(student)}</td>
-                <td><TableAction label='Delete' type='delete' item='student' onClickCallback={() => deleteStudentClassByIds(student, activeClassId)} /></td>
-              </tr>);
-            })}
-            </tbody>
-          </table>
+          <div className='TableResponsive'>
+            <table className='Table'>
+              <thead>
+              <tr>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              {typeof selectedClass !== 'undefined' && selectedClass.classStudents.map((student) => {
+                return (<tr key={student}>
+                  <td>{student}</td>
+                  <td>{this.getStudentNameById(student)}</td>
+                  <td><TableAction label='Delete' type='delete' item='student' onClickCallback={() => deleteStudentClassByIds(student, activeClassId)} /></td>
+                </tr>);
+              })}
+              </tbody>
+            </table>
+          </div>
 
           <Button title='Close' onClickCallback={this.onClickViewClassClose} />
         </Form>

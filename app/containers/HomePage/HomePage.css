@@ -11,6 +11,10 @@
     padding: 0;
 }
 
+.TableResponsive {
+    overflow-x: auto;
+}
+
 .Table {
     margin: 0 0 60px 0;
 }
