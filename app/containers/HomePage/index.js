@@ -28,6 +28,15 @@ import './HomePage.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
+  // add new class - open
+  onClickNewClassOpen = () => {
+    // reset student to class fields
+    this.props.resetNewStudentClassFields();
+
+    this.props.openNewClassForm();
+  };
+
+  // add new class - save
   onClickNewClassSave = () => {
     const { newClassFields } = this.props;
 
@@ -39,19 +48,26 @@ class HomePage extends React.PureComponent {
     }
   };
 
+  // add new class - cancel
   onClickNewClassCancel = () => {
     this.props.resetNewClassFields();
     this.props.closeForm();
   };
 
+  // add new class - fields
   onChangeNewClassFields = (event, property) => {
     this.props.updateNewClassFields(property, event.target.value);
   };
 
-  onChangeNewStudentClassFields = (event, property) => {
-    this.props.updateNewStudentClassFields(property, event.target.value);
+  // add student to class - open
+  onClickNewStudentOpen = () => {
+    // reset add new class fields
+    this.props.resetNewClassFields();
+
+    this.props.openNewStudentForm();
   };
 
+  // add student to class - save
   onClickNewStudentSave = () => {
     const { NewStudentClassFields } = this.props;
 
@@ -63,13 +79,19 @@ class HomePage extends React.PureComponent {
     }
   };
 
+  // add student to class - cancel
   onClickNewStudentCancel = () => {
     this.props.resetNewStudentClassFields();
     this.props.closeForm();
   };
 
+  // add student to class - fields
+  onChangeNewStudentClassFields = (event, property) => {
+    this.props.updateNewStudentClassFields(property, event.target.value);
+  };
+
   render() {
-    const { activeFormId, newClassFields, classes, students, openNewClassForm, openNewStudentForm, deleteClassById } = this.props;
+    const { activeFormId, newClassFields, classes, students, deleteClassById } = this.props;
 
     // students options for select component
     const studentsOptions = students.map(student => {
@@ -137,7 +159,7 @@ class HomePage extends React.PureComponent {
           </Form>
         }
 
-        <Button title='Add New Class' onClickCallback={openNewClassForm} /> <Button title='Add Student to Class' onClickCallback={openNewStudentForm} />
+        <Button title='Add New Class' onClickCallback={this.onClickNewClassOpen} /> <Button title='Add Student to Class' onClickCallback={this.onClickNewStudentOpen} />
       </div>
     );
   }
