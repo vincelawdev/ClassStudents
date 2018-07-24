@@ -10,7 +10,9 @@
  *   return state.set('yourStateVariable', true);
  */
 import { fromJS } from 'immutable';
-import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS, RESET_NEW_STUDENT_CLASS_FIELDS } from './constants';
+import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS,
+  RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS,
+  RESET_NEW_STUDENT_CLASS_FIELDS, ADD_STUDENT_CLASS } from './constants';
 import content from '../../json/content.json';
 
 // initial object of newClassFields
@@ -64,6 +66,28 @@ function deleteClass(state, action) {
   return state.set('classes', fromJS(newClasses));
 }
 
+function addStudentClass(state) {
+  const newClasses = state.get('classes').toJS();
+  const newStudentClass = state.get('newStudentClassFields').toJS();
+  const studentClassIndex = newClasses.findIndex(
+    classSingle => classSingle.classId === newStudentClass.classId,
+  );
+  const studentClass = newClasses[studentClassIndex];
+  const studentClassStudents = newClasses[studentClassIndex].classStudents;
+  const studentIndex = studentClassStudents.findIndex(
+    studentId => studentId === newStudentClass.studentId,
+  );
+
+  // student id is unique and maximum number of students is not reached
+  if(studentIndex === -1 && (studentClassStudents.length < studentClass.classNumber)) {
+    newClasses[studentClassIndex].classStudents.push(newStudentClass.studentId);
+
+    return state.set('classes', fromJS(newClasses));
+  }
+
+  return state;
+}
+
 function homeReducer(state = initialState, action) {
   switch (action.type) {
     case OPEN_FORM:
@@ -82,6 +106,8 @@ function homeReducer(state = initialState, action) {
       return state.setIn(['newStudentClassFields', action.property], action.value);
     case RESET_NEW_STUDENT_CLASS_FIELDS:
       return state.set('newStudentClassFields', fromJS(newStudentClassFieldsInitial));
+    case ADD_STUDENT_CLASS:
+      return addStudentClass(state);
     default:
       return state;
   }

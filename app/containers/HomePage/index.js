@@ -16,8 +16,8 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import formatAussieDate from 'utils/formatDate';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
-import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass, updateNewStudentClassFields, resetNewStudentClassFields } from './actions';
+import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectNewStudentClassFields, makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
+import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass, updateNewStudentClassFields, resetNewStudentClassFields, addStudentClass } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
 import Input from '../../components/Input/';
@@ -50,6 +50,17 @@ class HomePage extends React.PureComponent {
 
   onChangeNewStudentClassFields = (event, property) => {
     this.props.updateNewStudentClassFields(property, event.target.value);
+  };
+
+  onClickNewStudentSave = () => {
+    const { NewStudentClassFields } = this.props;
+
+    // simple validation check to ensure all fields have been entered before saving
+    if(NewStudentClassFields.studentId !== '' && NewStudentClassFields.classId !== '') {
+      this.props.addStudentClass();
+      this.props.resetNewStudentClassFields();
+      this.props.closeForm();
+    }
   };
 
   onClickNewStudentCancel = () => {
@@ -122,7 +133,7 @@ class HomePage extends React.PureComponent {
             <Select id='studentId' label='Student' firstOptionText='Select a Student' options={studentsOptions} onChangeCallback={event => this.onChangeNewStudentClassFields(event, 'studentId')} />
             <Select id='classId' label='Class' firstOptionText='Select a Class' options={classesOptions} onChangeCallback={event => this.onChangeNewStudentClassFields(event, 'classId')} />
 
-            <Button title='Cancel' onClickCallback={this.onClickNewStudentCancel} />
+            <Button title='Save' onClickCallback={this.onClickNewStudentSave} /> <Button title='Cancel' onClickCallback={this.onClickNewStudentCancel} />
           </Form>
         }
 
@@ -135,6 +146,7 @@ class HomePage extends React.PureComponent {
 HomePage.propTypes = {
   activeFormId: PropTypes.string,
   newClassFields: PropTypes.object,
+  NewStudentClassFields: PropTypes.object,
   classes: PropTypes.array,
   students: PropTypes.array,
   openNewClassForm: PropTypes.func,
@@ -146,11 +158,13 @@ HomePage.propTypes = {
   deleteClassById: PropTypes.func,
   updateNewStudentClassFields: PropTypes.func,
   resetNewStudentClassFields: PropTypes.func,
+  addStudentClass: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   activeFormId: makeSelectActiveFormId(),
   newClassFields: makeSelectNewClassFields(),
+  NewStudentClassFields: makeSelectNewStudentClassFields(),
   classes: makeSelectClasses(),
   students: makeSelectStudents(),
 });
@@ -166,6 +180,7 @@ const mapDispatchToProps = dispatch => {
     deleteClassById: classId => dispatch(deleteClass(classId)),
     updateNewStudentClassFields: (property, value) => dispatch(updateNewStudentClassFields(property, value)),
     resetNewStudentClassFields: () => dispatch(resetNewStudentClassFields()),
+    addStudentClass: () => dispatch(addStudentClass()),
   };
 };
 

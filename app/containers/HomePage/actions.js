@@ -15,7 +15,9 @@
  *    }
  */
 
-import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS, RESET_NEW_STUDENT_CLASS_FIELDS } from './constants';
+import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS,
+  RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS,
+  RESET_NEW_STUDENT_CLASS_FIELDS, ADD_STUDENT_CLASS } from './constants';
 
 // open form by form id
 export function openForm(id) {
@@ -76,5 +78,12 @@ export function updateNewStudentClassFields(property, value) {
 export function resetNewStudentClassFields() {
   return {
     type: RESET_NEW_STUDENT_CLASS_FIELDS,
+  };
+}
+
+// add class by adding object to classes array
+export function addStudentClass() {
+  return {
+    type: ADD_STUDENT_CLASS,
   };
 }

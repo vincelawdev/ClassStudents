@@ -17,3 +17,4 @@ export const RESET_NEW_CLASS_FIELDS = 'boilerplate/Home/RESET_NEW_CLASS_FIELDS';
 export const DELETE_CLASS = 'boilerplate/Home/DELETE_CLASS';
 export const UPDATE_NEW_STUDENT_CLASS_FIELDS = 'boilerplate/Home/UPDATE_NEW_STUDENT_CLASS_FIELDS';
 export const RESET_NEW_STUDENT_CLASS_FIELDS = 'boilerplate/Home/RESET_NEW_STUDENT_CLASS_FIELDS';
+export const ADD_STUDENT_CLASS = 'boilerplate/Home/ADD_STUDENT_CLASS';
