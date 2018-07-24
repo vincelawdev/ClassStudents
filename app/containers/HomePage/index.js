@@ -17,7 +17,7 @@ import { createStructuredSelector } from 'reselect';
 import formatAussieDate from 'utils/formatDate';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
-import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass, updateNewStudentClassFields } from './actions';
+import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass, updateNewStudentClassFields, resetNewStudentClassFields } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
 import Input from '../../components/Input/';
@@ -53,6 +53,7 @@ class HomePage extends React.PureComponent {
   };
 
   onClickNewStudentCancel = () => {
+    this.props.resetNewStudentClassFields();
     this.props.closeForm();
   };
 
@@ -144,6 +145,7 @@ HomePage.propTypes = {
   resetNewClassFields: PropTypes.func,
   deleteClassById: PropTypes.func,
   updateNewStudentClassFields: PropTypes.func,
+  resetNewStudentClassFields: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -163,6 +165,7 @@ const mapDispatchToProps = dispatch => {
     resetNewClassFields: () => dispatch(resetNewClassFields()),
     deleteClassById: classId => dispatch(deleteClass(classId)),
     updateNewStudentClassFields: (property, value) => dispatch(updateNewStudentClassFields(property, value)),
+    resetNewStudentClassFields: () => dispatch(resetNewStudentClassFields()),
   };
 };
 

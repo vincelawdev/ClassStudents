@@ -10,7 +10,7 @@
  *   return state.set('yourStateVariable', true);
  */
 import { fromJS } from 'immutable';
-import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS } from './constants';
+import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS, RESET_NEW_STUDENT_CLASS_FIELDS } from './constants';
 import content from '../../json/content.json';
 
 // initial object of newClassFields
@@ -80,6 +80,8 @@ function homeReducer(state = initialState, action) {
       return deleteClass(state, action);
     case UPDATE_NEW_STUDENT_CLASS_FIELDS:
       return state.setIn(['newStudentClassFields', action.property], action.value);
+    case RESET_NEW_STUDENT_CLASS_FIELDS:
+      return state.set('newStudentClassFields', fromJS(newStudentClassFieldsInitial));
     default:
       return state;
   }
