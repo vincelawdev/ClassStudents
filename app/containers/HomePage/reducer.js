@@ -12,7 +12,7 @@
 import { fromJS } from 'immutable';
 import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS,
   RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS,
-  RESET_NEW_STUDENT_CLASS_FIELDS, ADD_STUDENT_CLASS } from './constants';
+  RESET_NEW_STUDENT_CLASS_FIELDS, ADD_STUDENT_CLASS, DELETE_STUDENT_CLASS } from './constants';
 import content from '../../json/content.json';
 
 // initial object of newClassFields
@@ -89,6 +89,26 @@ function addStudentClass(state) {
   return state;
 }
 
+function deleteStudentClass(state, action) {
+  const newClasses = state.get('classes').toJS();
+  const studentClassIndex = newClasses.findIndex(
+    classSingle => classSingle.classId === action.classId,
+  );
+  const studentClassStudents = newClasses[studentClassIndex].classStudents;
+  const studentIndex = studentClassStudents.findIndex(
+    studentId => studentId === action.studentId,
+  );
+
+  // student id exists in class
+  if(studentIndex >= 0) {
+    newClasses[studentClassIndex].classStudents.splice(studentIndex, 1);
+
+    return state.set('classes', fromJS(newClasses));
+  }
+
+  return state;
+}
+
 function homeReducer(state = initialState, action) {
   switch (action.type) {
     case OPEN_FORM:
@@ -115,6 +135,8 @@ function homeReducer(state = initialState, action) {
       return state.set('newStudentClassFields', fromJS(newStudentClassFieldsInitial));
     case ADD_STUDENT_CLASS:
       return addStudentClass(state);
+    case DELETE_STUDENT_CLASS:
+      return deleteStudentClass(state, action);
     default:
       return state;
   }

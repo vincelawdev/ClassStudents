@@ -17,7 +17,7 @@
 
 import { OPEN_FORM, CLOSE_FORM, ADD_CLASS, UPDATE_NEW_CLASS_FIELDS,
   RESET_NEW_CLASS_FIELDS, DELETE_CLASS, UPDATE_NEW_STUDENT_CLASS_FIELDS,
-  RESET_NEW_STUDENT_CLASS_FIELDS, ADD_STUDENT_CLASS } from './constants';
+  RESET_NEW_STUDENT_CLASS_FIELDS, ADD_STUDENT_CLASS, DELETE_STUDENT_CLASS } from './constants';
 
 // open form by form id and set active form id and class id
 export function openForm(formId, classId) {
@@ -86,5 +86,14 @@ export function resetNewStudentClassFields() {
 export function addStudentClass() {
   return {
     type: ADD_STUDENT_CLASS,
+  };
+}
+
+// delete student from class by student id and class id
+export function deleteStudentClass(studentId, classId) {
+  return {
+    type: DELETE_STUDENT_CLASS,
+    studentId,
+    classId,
   };
 }

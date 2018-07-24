@@ -16,8 +16,10 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import formatAussieDate from 'utils/formatDate';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectActiveFormId, makeSelectActiveClassId, makeSelectNewClassFields, makeSelectNewStudentClassFields, makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
-import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass, updateNewStudentClassFields, resetNewStudentClassFields, addStudentClass } from './actions';
+import { makeSelectActiveFormId, makeSelectActiveClassId, makeSelectNewClassFields, makeSelectNewStudentClassFields,
+  makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
+import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass,
+  updateNewStudentClassFields, resetNewStudentClassFields, addStudentClass, deleteStudentClass } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
 import Input from '../../components/Input/';
@@ -110,7 +112,7 @@ class HomePage extends React.PureComponent {
   };
 
   render() {
-    const { activeFormId, activeClassId, newClassFields, classes, students, openClassForm, deleteClassById } = this.props;
+    const { activeFormId, activeClassId, newClassFields, classes, students, openClassForm, deleteClassById, deleteStudentClassByIds } = this.props;
 
     // students options for select component
     const studentsOptions = students.map(student => {
@@ -197,7 +199,7 @@ class HomePage extends React.PureComponent {
               return (<tr key={student}>
                 <td>{student}</td>
                 <td>{this.getStudentNameById(student)}</td>
-                <td><TableAction label='Delete' type='delete' onClickCallback={() => {console.log('delete student')}} /></td>
+                <td><TableAction label='Delete' type='delete' onClickCallback={() => deleteStudentClassByIds(student, activeClassId)} /></td>
               </tr>);
             })}
             </tbody>
@@ -231,6 +233,7 @@ HomePage.propTypes = {
   updateNewStudentClassFields: PropTypes.func,
   resetNewStudentClassFields: PropTypes.func,
   addStudentClass: PropTypes.func,
+  deleteStudentClassByIds: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -255,6 +258,7 @@ const mapDispatchToProps = dispatch => {
     updateNewStudentClassFields: (property, value) => dispatch(updateNewStudentClassFields(property, value)),
     resetNewStudentClassFields: () => dispatch(resetNewStudentClassFields()),
     addStudentClass: () => dispatch(addStudentClass()),
+    deleteStudentClassByIds: (studentId, classId) => dispatch(deleteStudentClass(studentId, classId)),
   };
 };
 
