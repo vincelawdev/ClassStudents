@@ -33,9 +33,16 @@ export const initialState = fromJS({
 function addClass(state) {
   const newClasses = state.get('classes').toJS();
   const newClass = state.get('newClassFields').toJS();
-  newClasses.push(newClass);
+  const classIndex = newClasses.findIndex(classSingle => classSingle.classId === newClass.classId);
 
-  return state.set('classes', fromJS(newClasses));
+  // class id is unique
+  if(classIndex === -1) {
+    newClasses.push(newClass);
+
+    return state.set('classes', fromJS(newClasses));
+  }
+
+  return state;
 }
 
 function deleteClass(state, action) {
