@@ -34,6 +34,19 @@ class HomePage extends React.Component {
     },
   };
 
+  onClickNewClassCancel = () => {
+    const newClassFields = { ...this.state.newClassFields };
+
+    Object.keys(newClassFields).map(property => {
+      newClassFields[property] = '';
+      return property;
+    });
+
+    this.setState({ newClassFields });
+
+    this.props.closeForm();
+  };
+
   onChangeNewClassFields = (event, property) => {
     const newClassFields = { ...this.state.newClassFields };
     newClassFields[property] = event.target.value;
@@ -41,7 +54,11 @@ class HomePage extends React.Component {
     this.setState({ newClassFields });
   };
 
-  testSaveClass = () => {
+  onClickNewStudentCancel = () => {
+    this.props.closeForm();
+  };
+
+  saveClass = () => {
     console.log('classId:', this.state.newClassFields.classId);
     console.log('className:', this.state.newClassFields.className);
     console.log('classNumber:', this.state.newClassFields.classNumber);
@@ -49,7 +66,7 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const { activeFormId, onClickNewClass, onClickNewStudent, onClickCancel } = this.props;
+    const { activeFormId, openNewClassForm, openNewStudentForm } = this.props;
 
     return (
       <div className='HomePage'>
@@ -63,16 +80,16 @@ class HomePage extends React.Component {
             <Input id='classNumber' label='Maximum number of students:' type='number' value={this.state.newClassFields.classNumber} onChangeCallback={event => this.onChangeNewClassFields(event, 'classNumber')} />
             <Input id='classStart' label='Starting Date:' type='date' value={this.state.newClassFields.classStart} onChangeCallback={event => this.onChangeNewClassFields(event, 'classStart')} />
 
-            <Button title='Save' onClickCallback={this.testSaveClass} /> <Button title='Cancel' onClickCallback={onClickCancel} />
+            <Button title='Save' onClickCallback={this.saveClass} /> <Button title='Cancel' onClickCallback={this.onClickNewClassCancel} />
           </Form>
         }
         {activeFormId === 'newStudent' &&
           <Form>
             <h2 className='H2'>New Student</h2>
-            <Button title='Cancel' onClickCallback={onClickCancel} />
+            <Button title='Cancel' onClickCallback={this.onClickNewStudentCancel} />
           </Form>
         }
-        <Button title='New Class' onClickCallback={onClickNewClass} /> <Button title='New Student' onClickCallback={onClickNewStudent} />
+        <Button title='New Class' onClickCallback={openNewClassForm} /> <Button title='New Student' onClickCallback={openNewStudentForm} />
       </div>
     );
   }
@@ -80,9 +97,9 @@ class HomePage extends React.Component {
 
 HomePage.propTypes = {
   activeFormId: PropTypes.string,
-  onClickNewClass: PropTypes.func,
-  onClickNewStudent: PropTypes.func,
-  onClickCancel: PropTypes.func,
+  openNewClassForm: PropTypes.func,
+  openNewStudentForm: PropTypes.func,
+  closeForm: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -91,9 +108,9 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClickNewClass: () => { dispatch(openForm('newClass')) },
-    onClickNewStudent: () => { dispatch(openForm('newStudent')) },
-    onClickCancel: () => { dispatch(closeForm()) },
+    openNewClassForm: () => { dispatch(openForm('newClass')) },
+    openNewStudentForm: () => { dispatch(openForm('newStudent')) },
+    closeForm: () => { dispatch(closeForm()) },
   };
 };
 
