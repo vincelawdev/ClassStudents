@@ -15,7 +15,7 @@
  *    }
  */
 
-import { OPEN_FORM, CLOSE_FORM } from './constants';
+import { OPEN_FORM, CLOSE_FORM, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS } from './constants';
 
 // open form by form id
 export function openForm(id) {
@@ -25,10 +25,25 @@ export function openForm(id) {
   };
 }
 
-// close form by passing empty string '' in form id
-export function closeForm(id) {
+// close form by and set empty string ''
+export function closeForm() {
   return {
     type: CLOSE_FORM,
-    id,
+  };
+}
+
+// update new class fields by passing in property and value
+export function updateNewClassFields(property, value) {
+  return {
+    type: UPDATE_NEW_CLASS_FIELDS,
+    property,
+    value,
+  };
+}
+
+// reset new class fields
+export function resetNewClassFields() {
+  return {
+    type: RESET_NEW_CLASS_FIELDS,
   };
 }

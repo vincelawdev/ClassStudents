@@ -11,11 +11,20 @@
  */
 import { fromJS } from 'immutable';
 
-import { OPEN_FORM, CLOSE_FORM } from './constants';
+import { OPEN_FORM, CLOSE_FORM, UPDATE_NEW_CLASS_FIELDS, RESET_NEW_CLASS_FIELDS } from './constants';
+
+// initial object of newClassFields
+const newClassFieldsInitial = {
+  classId: '',
+  className: '',
+  classNumber: '',
+  classStart: '',
+};
 
 // The initial state of the App
 export const initialState = fromJS({
   activeFormId: '',
+  newClassFields: newClassFieldsInitial,
 });
 
 function homeReducer(state = initialState, action) {
@@ -24,6 +33,10 @@ function homeReducer(state = initialState, action) {
       return state.set('activeFormId', action.id);
     case CLOSE_FORM:
       return state.set('activeFormId', '');
+    case UPDATE_NEW_CLASS_FIELDS:
+      return state.setIn(['newClassFields', action.property], action.value);
+    case RESET_NEW_CLASS_FIELDS:
+      return state.set('newClassFields', newClassFieldsInitial);
     default:
       return state;
   }
