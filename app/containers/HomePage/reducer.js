@@ -33,6 +33,7 @@ const newStudentClassFieldsInitial = {
 // The initial state of the App
 export const initialState = fromJS({
   activeFormId: '',
+  activeClassId: '',
   newClassFields: newClassFieldsInitial,
   newStudentClassFields: newStudentClassFieldsInitial,
   students: content.Students,
@@ -93,7 +94,10 @@ function homeReducer(state = initialState, action) {
     case OPEN_FORM:
       return state.set('activeFormId', action.id);
     case CLOSE_FORM:
-      return state.set('activeFormId', '');
+      return state.merge({
+        activeFormId: '',
+        activeClassId: '',
+      });
     case ADD_CLASS:
       return addClass(state);
     case UPDATE_NEW_CLASS_FIELDS:
