@@ -16,7 +16,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses } from 'containers/App/selectors';
-import { openForm, closeForm, updateNewClassFields, resetNewClassFields, deleteClass } from './actions';
+import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
 import Input from '../../components/Input/';
@@ -44,6 +44,7 @@ class HomePage extends React.PureComponent {
 
     // simple validation check to ensure all fields have been entered before saving
     if(newClassFields.classId !== '' && newClassFields.className !== '' && newClassFields.classNumber !== '' && newClassFields.classStart !== '') {
+      this.props.addClassByObj();
       this.props.closeForm();
     }
   };
@@ -71,7 +72,7 @@ class HomePage extends React.PureComponent {
                 <td>{classSingle.classId}</td>
                 <td>{classSingle.className}</td>
                 <td>{classSingle.classStart}</td>
-                <td>{classSingle.classNumber}</td>
+                <td>{classSingle.classStudents.length}</td>
                 <td><TableAction label='View' type='view' onClickCallback={()=> console.log('view clicked')} /> / <TableAction label='Delete' type='delete' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
               </tr>);
             })}
@@ -110,9 +111,10 @@ HomePage.propTypes = {
   openNewClassForm: PropTypes.func,
   openNewStudentForm: PropTypes.func,
   closeForm: PropTypes.func,
-  deleteClassById: PropTypes.func,
+  addClassByObj: PropTypes.func,
   updateNewClassFields: PropTypes.func,
   resetNewClassFields: PropTypes.func,
+  deleteClassById: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -126,6 +128,7 @@ const mapDispatchToProps = dispatch => {
     openNewClassForm: () => dispatch(openForm('newClass')),
     openNewStudentForm: () => dispatch(openForm('newStudent')),
     closeForm: () => dispatch(closeForm()),
+    addClassByObj: () => dispatch(addClass()),
     updateNewClassFields: (property, value) => dispatch(updateNewClassFields(property, value)),
     resetNewClassFields: () => dispatch(resetNewClassFields()),
     deleteClassById: classId => dispatch(deleteClass(classId)),

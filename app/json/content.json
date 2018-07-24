@@ -35,21 +35,21 @@
       "className": "Web Development",
       "classNumber": "5",
       "classStart": "2018-08-01",
-      "classStudents": []
+      "classStudents": ["VL001", "MJ001", "JB001"]
     },
     {
       "classId": "CS002",
       "className": "Web Design",
       "classNumber": "10",
       "classStart": "2018-09-01",
-      "classStudents": []
+      "classStudents": ["FM001"]
     },
     {
       "classId": "CS003",
       "className": "Business Administration",
       "classNumber": "20",
       "classStart": "2018-10-01",
-      "classStudents": []
+      "classStudents": ["DG001"]
     },
     {
       "classId": "CS004",
