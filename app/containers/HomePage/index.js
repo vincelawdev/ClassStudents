@@ -17,7 +17,7 @@ import { createStructuredSelector } from 'reselect';
 import formatAussieDate from 'utils/formatDate';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectActiveFormId, makeSelectNewClassFields, makeSelectClasses, makeSelectStudents } from 'containers/App/selectors';
-import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass } from './actions';
+import { openForm, closeForm, addClass, updateNewClassFields, resetNewClassFields, deleteClass, updateNewStudentClassFields } from './actions';
 import reducer from './reducer';
 import Form from '../../components/Form/';
 import Input from '../../components/Input/';
@@ -46,6 +46,10 @@ class HomePage extends React.PureComponent {
 
   onChangeNewClassFields = (event, property) => {
     this.props.updateNewClassFields(property, event.target.value);
+  };
+
+  onChangeNewStudentClassFields = (event, property) => {
+    this.props.updateNewStudentClassFields(property, event.target.value);
   };
 
   onClickNewStudentCancel = () => {
@@ -114,8 +118,8 @@ class HomePage extends React.PureComponent {
           <Form>
             <h2 className='H2'>Add Student to Class</h2>
 
-            <Select id='studentId' label='Student' firstOptionText='Select a Student' options={studentsOptions} onChangeCallback={event => (event) => {}} />
-            <Select id='classId' label='Class' firstOptionText='Select a Class' options={classesOptions} onChangeCallback={event => (event) => {}} />
+            <Select id='studentId' label='Student' firstOptionText='Select a Student' options={studentsOptions} onChangeCallback={event => this.onChangeNewStudentClassFields(event, 'studentId')} />
+            <Select id='classId' label='Class' firstOptionText='Select a Class' options={classesOptions} onChangeCallback={event => this.onChangeNewStudentClassFields(event, 'classId')} />
 
             <Button title='Cancel' onClickCallback={this.onClickNewStudentCancel} />
           </Form>
@@ -139,6 +143,7 @@ HomePage.propTypes = {
   updateNewClassFields: PropTypes.func,
   resetNewClassFields: PropTypes.func,
   deleteClassById: PropTypes.func,
+  updateNewStudentClassFields: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -157,6 +162,7 @@ const mapDispatchToProps = dispatch => {
     updateNewClassFields: (property, value) => dispatch(updateNewClassFields(property, value)),
     resetNewClassFields: () => dispatch(resetNewClassFields()),
     deleteClassById: classId => dispatch(deleteClass(classId)),
+    updateNewStudentClassFields: (property, value) => dispatch(updateNewStudentClassFields(property, value)),
   };
 };
 
