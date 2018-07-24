@@ -154,7 +154,7 @@ class HomePage extends React.PureComponent {
                 <td>{classSingle.className}</td>
                 <td>{formatAussieDate(classSingle.classStart)}</td>
                 <td>{classSingle.classStudents.length}</td>
-                <td><TableAction label='View' type='view' onClickCallback={() => openClassForm(classSingle.classId)} /> / <TableAction label='Delete' type='delete' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
+                <td><TableAction label='View' type='view' onClickCallback={() => openClassForm(classSingle.classId)} /> / <TableAction label='Delete' type='delete' item='class' onClickCallback={() => deleteClassById(classSingle.classId)} /></td>
               </tr>);
             })}
           </tbody>
@@ -199,7 +199,7 @@ class HomePage extends React.PureComponent {
               return (<tr key={student}>
                 <td>{student}</td>
                 <td>{this.getStudentNameById(student)}</td>
-                <td><TableAction label='Delete' type='delete' onClickCallback={() => deleteStudentClassByIds(student, activeClassId)} /></td>
+                <td><TableAction label='Delete' type='delete' item='student' onClickCallback={() => deleteStudentClassByIds(student, activeClassId)} /></td>
               </tr>);
             })}
             </tbody>
